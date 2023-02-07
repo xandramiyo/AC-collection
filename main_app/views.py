@@ -11,9 +11,6 @@ def home(request):
 def about(request):
 	return render(request, 'about.html')
 
-# def villagers_index(request):
-# 	return render(request, 'villagers/index.html')
-
 class VillagerList(ListView):
 	model = Villager
 	template_name = 'villagers/villager_list.html'
@@ -21,6 +18,7 @@ class VillagerList(ListView):
 class VillagerCreate(CreateView):
 	model = Villager
 	fields = '__all__'
+	succes_url= '/villagers'
 
 class VillagerDetail(DetailView):
 	model = Villager

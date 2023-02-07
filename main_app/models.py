@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -13,4 +14,4 @@ class Villager(models.Model):
 		return self.name
 	
 	def get_absolute_url(self):
-		return reverse('detail', kwargs={'villager_id': self.id})
+		return reverse('villager_detail', kwargs={'villager_id': self.id})
