@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Add Villager</h1>
+  <div class="form-ctr">
+	<form class="villager-form" action="" method="POST">
+		{% csrf_token %}
+		<table class="villager-form-table">
+		  {{ form.as_table }}
+		</table>
+		<input type="submit" value="Submit!" class="btn submit">
+	</form>
+  </div>
+{% endblock %}

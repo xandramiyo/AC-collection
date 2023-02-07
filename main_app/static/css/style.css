@@ -1,0 +1,100 @@
+:root {
+	--main-color: #0cc6b8;
+	--secondary-color: #dcd6bd;
+	--accent-color: #87d5e8;
+}
+
+* {
+	font-family: 'Poppins', sans-serif;
+	padding: 0px;
+	margin: 0px;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: var(--secondary-color);
+}
+
+nav {
+	background-color: #0cc6b8;
+	display: flex;
+	justify-content: space-between;
+}
+
+nav > div {
+	display: flex;
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding: 0px 0px 8px 0px;
+}
+
+.add-villager {
+	justify-content: flex-end;
+}
+
+.logo {
+	display: flex;
+	justify-content: flex-start;
+	padding: 8px;
+}
+
+#logo {
+	height: 3.5rem;
+}
+
+a {
+	text-decoration: none;
+	padding: 0px 10px;
+	color: white;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+h1 {
+	text-align: center;
+	padding: 8px 0px;
+	color: white;
+}
+
+footer {
+	position: fixed;
+	right: 0px;
+	bottom: 0px;
+	font-size: .8rem;
+}
+
+
+/* Villager Form */
+
+.villager-form, 
+.form-ctr {
+	display: flex;
+	justify-content: center;
+}
+
+.villager-form {
+	padding: 20px;
+	background-color: #b3ac8e;
+	width: 80%;
+	flex-direction: column;
+	border-radius: 4%;
+}
+
+.submit {
+	width: 10%;
+	align-self: center;
+	margin-top: 20px;
+}
+
+#id_name,
+#id_personality,
+#id_species,
+#id_birthday,
+#id_catchprase {
+	width: 80%;
+	border: none;
+	border-bottom: 1px solid black;
+}

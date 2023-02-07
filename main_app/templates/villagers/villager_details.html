@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ villager.name}}</h1>
+
+
+<div class="show-card-ctr">	
+	<div class="show-card">
+		<img>
+	</div>
+	<div class="villager-name">
+      <p>{{ villager.name }}</p>
+    </div>
+	<div class="villager-personality">
+      <p>{{ villager.personality }}</p>
+    </div>
+	<div class="villager-species">
+      <p>{{ villager.species }}</p>
+    </div>
+	<div class="villager-birthday">
+      <p>{{ villager.birthday }}</p>
+    </div>
+	<div class="villager-cathprase">
+      <p>{{ villager.catchphrase }}</p>
+    </div>
+</div>
+
+
+{% endblock %}
