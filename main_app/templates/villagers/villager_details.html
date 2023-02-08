@@ -34,20 +34,30 @@
         <a href="{% url 'villager_update' villager.id %}">Edit</a>
       </div>
       <div class="CRUD-options">
-        <a>Delete</a>
+        <a href="{% url 'villager_delete' villager.id%}">Delete</a>
       </div>
     </div>
   </div>
   
-  <div class="bulletin">
-    
-  </div>
-  <div class="residence-history">
-    <h4>Residence History</h4>
-  </div>
-  <div class="comment-book">
-
-  </div>
+    <div class="bulletin">
+      
+    </div>
+    <div class="residence-history-ctr">
+      <div class="residence-history">
+        <h4>Residence History</h4>
+        {% if villager.homes.count %}
+        <ol class="villager-home-list">
+          {% for home in villager.homes.all %}
+              <li class="villager-home">{{ home.name }}</li>
+          {%  endfor %}
+        </ol>
+        {% endif %}
+      </div>
+    </div>
+    <div class="notebook">
+  
+    </div>
+  
 </div>
 
 

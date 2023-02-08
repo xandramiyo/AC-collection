@@ -38,6 +38,11 @@ nav > div {
 	padding: 0px 0px 8px 0px;
 }
 
+.add-nav {
+	display: flex;
+	justify-content: flex-end;
+}
+
 .add-villager {
 	justify-content: flex-end;
 }
@@ -60,6 +65,10 @@ a {
 	font-weight: 500;
 }
 
+a:hover {
+	font-weight: bold;
+}
+
 h1 {
 	text-align: center;
 	padding: 8px 0px;
@@ -80,7 +89,6 @@ footer {
 .form-ctr {
 	display: flex;
 	justify-content: center;
-	height: 70%;
 }
 
 .villager-form {
@@ -115,9 +123,11 @@ footer {
 
 /* Villager Index Page */
 
-.index-ctr {
+.card-ctr {
 	display: flex;
+	justify-content: center;
 	flex-wrap: wrap;
+	margin: .5rem 1.5rem 1.5rem 1.5rem;
 }
 
 .card {
@@ -133,10 +143,10 @@ footer {
 	height: 90%;
 }
 
-.villager-name-idx {
+.villager-name {
 	height: 10%;
 	text-align: center;
-	padding: 1vmin;
+	padding: .5rem;
 }
 
 /* Villager Details Page */
@@ -147,7 +157,7 @@ footer {
 	grid-template-columns: .5fr 1fr 1fr;
 	grid-template-areas: 
 		'sidebar bulletin bulletin'
-		'sidebar residence comments';
+		'sidebar residence notebook';
 }
 
 .sidebar {
@@ -195,7 +205,7 @@ td {
 	justify-content: center;
 }
 
-.CRUD-options > a{
+.CRUD-options > a {
 	color: var(--accent-color);
 	cursor: pointer;
 }
@@ -205,30 +215,113 @@ td {
 	background-color: #caa478;
 	border: .8rem solid #9c6f3e;
 	margin: .8rem;
-	width: 90%;
+	width: 95%;
+	justify-self: center;
 }
 
-.residence-history,
-.comment-book {
+.residence-history-ctr,
+.notebook {
 	width: 90%;
 	height: 75%;
 	align-self: center;
 	justify-self: center;
 }
 
-.residence-history {
-	grid-area: residence;
-	background-color: var(--main-color);
-}
-
-.comment-book {
-	grid-area: comments;
-	background-color: var(--accent-color);
-}
-
 h4 {
-	margin: 2vmin;
+	margin: .5rem 0px;
+	padding: 0px .3rem;
 	text-align: center;
 	border-bottom: 3px solid black;
 	font-weight: 400;
+	width: 100%;
+	font-size: 1.8rem;
+}
+
+.residence-history-ctr {
+	grid-area: residence;
+	background-color: var(--main-color);
+	display: flex;
+	justify-content: center;
+}
+
+.residence-history {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.villager-home-list {
+	text-align: center;
+}
+
+.villager-home {
+	width: fit-content;
+	margin: 0px;
+	font-size: 1.1rem;
+}
+
+.notebook {
+	grid-area: notebook;
+	background-color: var(--accent-color);
+}
+
+/* Delete Form */
+
+.delete-ctr {
+	display: flex;
+	justify-content: center;
+	margin: 3rem;
+}
+
+.delete-span {
+	background-color: white;
+	width: 60%;
+}
+
+.confirm-delete {
+	color: black;
+}
+
+.confirm-delete-form {
+	display: flex;
+	justify-content: center;
+	margin: 1rem;
+}
+
+.confirm-delete-btn {
+	padding: .5vmin;
+}
+
+.confirm-delete-form a {
+	color: var(--accent-color)
+}
+
+/* Address Book */
+
+.home-ctr {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.new-home-form {
+	background-color: var(--accent-color);
+	margin: 2rem;
+	width: 20rem;
+}
+
+.new-home-form form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: .5rem;
+}
+
+.new-home-form form * {
+	margin: .2rem;
+}
+
+#id_home_name {
+	width: 15rem;
 }

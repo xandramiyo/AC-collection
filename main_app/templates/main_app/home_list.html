@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Homes</h1>
+
+<div class="home-ctr">
+
+	<div class="home-list-ctr">
+		{% for home in object_list %}
+		<div class="home-card">
+			{{ home.name }}
+		</div>
+		{% endfor %}
+	</div>
+	<div class="new-home-form">
+		<form action="" method="POST">
+			{% csrf_token %}
+			<label for="id_name">Add Home</label>
+			<input type="text" name="name" maxlength="50" required id="id_home_name" placeholder="Happy Home Paradise">
+			<input type="submit" value="Submit!" class="btn">
+		</form>
+	</div>
+
+</div>
+
+{% endblock %}
