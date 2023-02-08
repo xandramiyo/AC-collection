@@ -10,14 +10,16 @@ class Home(models.Model):
 
 	def __str__(self):
 		return self.name
-
+	
+	def get_absolute_url(self):
+		return reverse('homes_index')
 
 class Villager(models.Model):
 	name = models.CharField(max_length=100)
 	personality = models.CharField(max_length=100)
 	species = models.CharField(max_length=100)
 	birthday = models.CharField(max_length=15)
-	catchprase = models.CharField(max_length=50)
+	catchphrase = models.CharField(max_length=50)
 	homes = models.ManyToManyField(Home)
 
 	def __str__(self):

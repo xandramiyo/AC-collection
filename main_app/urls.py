@@ -11,4 +11,5 @@ urlpatterns = [
 	path('villagers/<int:pk>/update/', views.VillagerUpdate.as_view(), name='villager_update'),
 	path('villagers/<int:pk>/delete/', views.VillagerDelete.as_view(), name='villager_delete'),
 	path('homes/', views.HomeList.as_view(), name='homes_index'),
+	path('homes/create/', views.HomeCreate.as_view(), name='homes_add'),
 ]

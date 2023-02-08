@@ -9,12 +9,18 @@
 	<div class="home-list-ctr">
 		{% for home in object_list %}
 		<div class="home-card">
-			{{ home.name }}
+			<div class="home-main">
+				{{ home.name }}
+			</div>
+			<div class="home-options">
+				<a>Edit</a>
+				<a>Delete</a>
+			</div>
 		</div>
 		{% endfor %}
 	</div>
 	<div class="new-home-form">
-		<form action="" method="POST">
+		<form action="{% url 'homes_add' %}" method="POST">
 			{% csrf_token %}
 			<label for="id_name">Add Home</label>
 			<input type="text" name="name" maxlength="50" required id="id_home_name" placeholder="Happy Home Paradise">
