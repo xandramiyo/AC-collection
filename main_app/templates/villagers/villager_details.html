@@ -1,34 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ villager.name}}</h1>
 
-
-<div class="show-card-ctr">	
-	<div class="show-card">
-		<img>
-	</div>
-	<div class="villager-name">
-      <p>{{ villager.name }}</p>
+<div class="detail-ctr">
+  <div class="sidebar">
+    <div class="villager-pic">
+      <img src="https://dodo.ac/np/images/e/ec/Snake_NH.png">
     </div>
-	<div class="villager-personality">
-      <p>{{ villager.personality }}</p>
+    <div class="villager-info">
+      <table>
+        <tr>
+          <td class="label">Name</td>
+          <td>{{ villager.name }}</td>
+        </tr>
+          <td class="label">Personality</td>
+          <td>{{ villager.personality }}</td>
+        <tr>
+          <td class="label">Species</td>
+          <td>{{ villager.species }}</td>
+        </tr>  
+        <tr>
+          <td class="label">Birthday</td>
+          <td>{{ villager.birthday }}</td>
+        </tr>
+        <tr>
+          <td class="label">Catchphrase</td>
+          <td>{{ villager.catchprase }}</td>
+        </tr>
+      </table>
     </div>
-	<div class="villager-species">
-      <p>{{ villager.species }}</p>
+    <div class="CRUD-options-ctr">
+      <div class="CRUD-options">
+        <a href="{% url 'villager_update' villager.id %}">Edit</a>
+      </div>
+      <div class="CRUD-options">
+        <a>Delete</a>
+      </div>
     </div>
-	<div class="villager-birthday">
-      <p>{{ villager.birthday }}</p>
-    </div>
-	<div class="villager-cathprase">
-      <p>{{ villager.catchphrase }}</p>
-    </div>
-</div>
-<div class="bulletin">
+  </div>
   
-</div>
-<div class="comment-book">
+  <div class="bulletin">
+    
+  </div>
+  <div class="residence-history">
+    <h4>Residence History</h4>
+  </div>
+  <div class="comment-book">
 
+  </div>
 </div>
 
 

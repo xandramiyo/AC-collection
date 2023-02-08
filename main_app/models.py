@@ -11,7 +11,7 @@ class Villager(models.Model):
 	catchprase = models.CharField(max_length=50)
 
 	def __str__(self):
-		return self.name
+		return f'{self.name} ({self.id})'
 	
 	def get_absolute_url(self):
-		return reverse('villager_detail', kwargs={'villager_id': self.id})
+		return reverse('villager_details', kwargs={'pk': self.id})

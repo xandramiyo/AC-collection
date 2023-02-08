@@ -1,19 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Villagers</h1>
-
-{% for villager in object_list %}
-  <div class="card">
-    <a href="{% url 'villager_details' villager.id %}">
-      <div class="villager-img">
-        <img>
-      </div>
-    </a>
-    <div class="villager-name">
-      <p>{{ villager.name }}</p>
-    </div>
+<div class="index-ctr">
+  <div>
+    <h1>Villagers</h1>
   </div>
-{% endfor %}
+  
+  <div class="index-ctr">
+    {% for villager in object_list %}
+      <div class="card">
+        <a href="{% url 'villager_details' villager.id %}">
+          <div class="villager-img">
+            <img>
+          </div>
+        </a>
+        <div class="villager-name">
+          <p>{{ villager.name }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}
