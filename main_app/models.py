@@ -6,7 +6,6 @@ class Note(models.Model):
 
 class Home(models.Model):
 	name = models.CharField(max_length=50)
-	default='Happy Home Paradise'
 
 	def __str__(self):
 		return self.name

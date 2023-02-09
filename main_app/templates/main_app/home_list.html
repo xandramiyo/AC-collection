@@ -13,8 +13,8 @@
 				{{ home.name }}
 			</div>
 			<div class="home-options">
-				<a>Edit</a>
-				<a>Delete</a>
+				<a href="{% url 'homes_update' home.id %}">Edit</a>
+				<a href="{% url 'homes_delete' home.id %}">Delete</a>
 			</div>
 		</div>
 		{% endfor %}
