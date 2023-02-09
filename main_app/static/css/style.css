@@ -154,7 +154,7 @@ footer {
 .detail-ctr {
 	height: 100%;
 	display: grid;
-	grid-template-columns: .5fr 1fr 1fr;
+	grid-template-columns: 1fr 1.2fr 1.8fr;
 	grid-template-areas: 
 		'sidebar bulletin bulletin'
 		'sidebar residence notebook';
@@ -169,6 +169,7 @@ footer {
 	align-items: center;
 	justify-content: center;
 	margin: 4rem 1rem 4rem 1rem;
+	box-shadow: 4px 4px 4px rgb(85, 85, 85);
 }
 
 .villager-pic {
@@ -217,14 +218,16 @@ td {
 	margin: .8rem;
 	width: 95%;
 	justify-self: center;
+	box-shadow: 4px 4px 4px rgb(85, 85, 85);
 }
 
 .residence-history-ctr,
-.notebook {
+.notebook-ctr {
 	width: 90%;
 	height: 85%;
 	align-self: center;
 	justify-self: center;
+	box-shadow: 4px 4px 4px rgb(85, 85, 85);
 }
 
 h4 {
@@ -234,7 +237,7 @@ h4 {
 	border-bottom: 3px solid black;
 	font-weight: 400;
 	width: 100%;
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 }
 
 .residence-history-ctr {
@@ -268,7 +271,7 @@ h4 {
 .villager-home {
 	width: fit-content;
 	margin: 0px;
-	font-size: 1.1rem;
+	font-size: 1rem;
 }
 
 .home-listing {
@@ -285,9 +288,56 @@ h4 {
 	font-weight: 300;
 }
 
-.notebook {
+.notebook-ctr {
 	grid-area: notebook;
 	background-color: var(--accent-color);
+}
+
+.notebook {
+	display: grid;
+	height: 100%;
+	grid-template-rows: 10% 60% 30%;
+	grid-template-areas: 
+		'title'
+		'main'
+		'form';
+}
+
+.notebook h3 {
+	text-align: center;
+}
+
+.note-ctr {
+	grid-area: main;
+	margin: .5rem;
+	overflow: scroll;
+}
+
+.note {
+	font-family: 'Indie Flower', cursive;
+	font-size: 1.2rem;
+	margin: .2rem;
+	background-color: white;
+}
+
+
+.notebook-form {
+	grid-area: form;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.notebook-form textarea {
+	width: 80%;
+	margin: .2rem;
+}
+
+.guest-btn {
+	padding: .2rem;
+	font-size: .8rem;
+
 }
 
 /* Delete Form */

@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-class Note(models.Model):
-	content = models.TextField(max_length=250)
 
 class Home(models.Model):
 	name = models.CharField(max_length=50)
@@ -26,3 +24,11 @@ class Villager(models.Model):
 	
 	def get_absolute_url(self):
 		return reverse('villager_details', kwargs={'pk': self.id})
+
+
+class Note(models.Model):
+	content = models.TextField(max_length=250)
+	villager = models.ForeignKey(Villager, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.content

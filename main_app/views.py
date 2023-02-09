@@ -1,13 +1,23 @@
 from django.shortcuts import render, redirect
+
+import requests
+
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Villager, Home, Note
-from .forms import HomeForm
+from .forms import NoteForm, HomeForm
 
 # Create your views here.
 def home(request):
-	return render(request, 'home.html')
+	url = 'https://acnhapi.com/v1/villagers/'
+	response = requests.get(url)
+	data = response.json()
+	context = {
+		'data' : data
+	}
+
+	return render(request, 'home.html', context)
 
 def about(request):
 	return render(request, 'about.html')
@@ -45,6 +55,16 @@ class VillagerDelete(DeleteView):
 	model = Villager
 	success_url = '/villagers'
 
+def add_note(request, villager_id):
+	form = NoteForm()
+	if form.is_valid():
+		new_note = form.save(commit=False)
+		print(villager_id)
+		new_note.villager_id = villager_id
+		new_note.save()
+	return redirect('villager_details', villager_id)
+
+
 class HomeList(ListView):
 	model = Home
 	def get_context_data(self, **kwargs):
@@ -71,6 +91,4 @@ def assoc_home(request, villager_id, home_id):
 
 def diss_home(request, villager_id, home_id):
 	Villager.objects.get(id=villager_id).homes.remove(home_id)
-	print(villager_id)
 	return redirect('villager_details', villager_id)
-

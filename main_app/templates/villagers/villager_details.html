@@ -39,44 +39,54 @@
     </div>
   </div>
   
-    <div class="bulletin">
+  <div class="bulletin">
       
-    </div>
-    <div class="residence-history-ctr">
-      <div class="residence-history">
-        <div class="residence-heading">
-          <h4>Residence History</h4>
-        </div>
-        {% if villager.homes.count %}
-        <ol class="villager-home-list">
-          {% for home in villager.homes.all %}
-              <div class="home-listing">
-                <li class="villager-home">{{ home.name }}</li>
-                <a href="{% url 'diss_home' villager.id home.id %}" class="delete-villager-home">X</a>
-              </div>
-          {%  endfor %}
-        </ol>
-        {% endif %}
-        <div class="home-selector">
-          <form action="" method="POST"  class="home-selector-form">
-            {% csrf_token %}
-            <select name="home_id">
-              {% for home in home_list %}
-                <option value="{{home.id}}">{{ home.name }}</option>
-              {% endfor %}
-            </select>
-            <input type="submit" value="Submit!" class="btn">
-          </form>
-        </div>
+  </div>
+  <div class="residence-history-ctr">
+    <div class="residence-history">
+      <div class="residence-heading">
+        <h4>Residence History</h4>
+      </div>
+      {% if villager.homes.count %}
+      <ol class="villager-home-list">
+        {% for home in villager.homes.all %}
+            <div class="home-listing">
+              <li class="villager-home">{{ home.name }}</li>
+              <a href="{% url 'diss_home' villager.id home.id %}" class="delete-villager-home">X</a>
+            </div>
+        {%  endfor %}
+      </ol>
+      {% endif %}
+      <div class="home-selector">
+        <form action="" method="POST"  class="home-selector-form">
+          {% csrf_token %}
+          <select name="home_id">
+            {% for home in home_list %}
+              <option value="{{home.id}}">{{ home.name }}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Submit!" class="btn">
+        </form>
       </div>
     </div>
+  </div>
+
+  <div class="notebook-ctr">
     <div class="notebook">
-      {% for home in home_list %}
-      <p>{{ home.name }}</p>
-      {% endfor %}
+      <h3>Guestbook</h3>
+      <div class="note-ctr">
+        {% for note in villager.note_set.all %}
+        <p class="note">{{ note.content }}</p>
+        {% endfor %}
+      </div>
+      <form action="{% url 'add_note' villager.id %}" method="POST" class="notebook-form">
+        {% csrf_token %}
+        <textarea class="note-input" spellcheck="true" maxlength=250 wrap="soft" autocomplete="off" placeholder="Have something to say about this villager?"></textarea>
+        <input type="submit" value="Add Note" class="guest-btn">
+      </form>
     </div>
-  
-</div>
+    
+  </div>
 
 
 {% endblock %}
