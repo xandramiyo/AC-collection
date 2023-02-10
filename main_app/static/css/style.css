@@ -211,6 +211,16 @@ td {
 	cursor: pointer;
 }
 
+.upload-form {
+	display: flex;
+	flex-direction: column;
+	margin-top: .4rem;
+}
+
+.upload-form input {
+	width: 5.5rem;
+}
+
 .bulletin {
 	grid-area: bulletin;
 	background-color: #caa478;
@@ -219,6 +229,28 @@ td {
 	width: 95%;
 	justify-self: center;
 	box-shadow: 4px 4px 4px rgb(85, 85, 85);
+	min-height: 14rem;
+}
+
+.empty-msg {
+	text-align: center;
+}
+
+.photo-ctr {
+	margin: .5rem;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.polaroid {
+	background-color: white;
+	padding: .3rem;
+	padding-bottom: .8rem;
+}
+
+.polaroid img {
+	height: 6rem;
+	width: auto;
 }
 
 .residence-history-ctr,
@@ -245,6 +277,7 @@ h4 {
 	background-color: var(--main-color);
 	display: flex;
 	justify-content: center;
+	max-height: 21rem;
 }
 
 .residence-history {
@@ -288,9 +321,14 @@ h4 {
 	font-weight: 300;
 }
 
+.home-selector select {
+	width: 70%;
+}
+
 .notebook-ctr {
 	grid-area: notebook;
-	background-color: var(--accent-color);
+	background-color: white;
+	max-height: 20rem;
 }
 
 .notebook {
@@ -305,19 +343,21 @@ h4 {
 
 .notebook h3 {
 	text-align: center;
+	margin-bottom: .2rem;
 }
 
 .note-ctr {
 	grid-area: main;
 	margin: .5rem;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .note {
 	font-family: 'Indie Flower', cursive;
 	font-size: 1.2rem;
-	margin: .2rem;
-	background-color: white;
+	margin: 0px .2rem;
+	border-top: 1px solid var(--accent-color);
+	border-bottom: 1px solid var(--accent-color);
 }
 
 
@@ -329,15 +369,18 @@ h4 {
 	align-items: center;
 }
 
-.notebook-form textarea {
-	width: 80%;
+.notebook-form label {
+	display: none;
+}
+
+#id_content {
+	max-height: 2.5rem;
 	margin: .2rem;
 }
 
 .guest-btn {
 	padding: .2rem;
 	font-size: .8rem;
-
 }
 
 /* Delete Form */

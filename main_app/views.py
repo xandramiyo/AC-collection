@@ -1,23 +1,22 @@
 from django.shortcuts import render, redirect
-
+import os
+import uuid
+import boto3
 import requests
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Villager, Home, Note
+from .models import Villager, Home, Note, Photo
 from .forms import NoteForm, HomeForm
+
+url = 'https://acnhapi.com/v1/villagers/'
+response = requests.get(url)
+data = response.json()
 
 # Create your views here.
 def home(request):
-	url = 'https://acnhapi.com/v1/villagers/'
-	response = requests.get(url)
-	data = response.json()
-	context = {
-		'data' : data
-	}
-
-	return render(request, 'home.html', context)
+	return render(request, 'home.html')
 
 def about(request):
 	return render(request, 'about.html')
@@ -33,6 +32,7 @@ class VillagerDetail(DetailView):
 		context = super(VillagerDetail, self).get_context_data(**kwargs)
 		context['villager_list'] = Villager.objects.all()
 		context['home_list'] = Home.objects.all()
+		context['note_form'] = NoteForm()
 		return context
 	
 	def post(self, request, *args, **kwargs):
@@ -44,22 +44,27 @@ class VillagerDetail(DetailView):
 class VillagerCreate(CreateView):
 	model = Villager
 	fields = ['name', 'personality', 'species', 'birthday', 'catchphrase']
-	succes_url= '/villagers'
+	succes_url = '/villagers'
+
+	# def form_valid(self, form):
+		#1: find name of the villager in the form
+		#2: iterate over data and check if a villager object's name matches the form's name
+		#3: if there is a match, a photo object will be created
 
 class VillagerUpdate(UpdateView):
 	model = Villager
 	fields = ['name', 'personality', 'species', 'birthday', 'catchphrase']
-	succes_url= '/villagers/villager_id'
+	succes_url = '/villagers/villager_id'
 
 class VillagerDelete(DeleteView):
 	model = Villager
 	success_url = '/villagers'
 
 def add_note(request, villager_id):
-	form = NoteForm()
+	form = NoteForm(request.POST)
+	print(request.POST)
 	if form.is_valid():
 		new_note = form.save(commit=False)
-		print(villager_id)
 		new_note.villager_id = villager_id
 		new_note.save()
 	return redirect('villager_details', villager_id)
@@ -92,3 +97,18 @@ def assoc_home(request, villager_id, home_id):
 def diss_home(request, villager_id, home_id):
 	Villager.objects.get(id=villager_id).homes.remove(home_id)
 	return redirect('villager_details', villager_id)
+
+def add_photo(request, pk):
+	photo_file = request.FILES.get('photo-file', None)
+	if photo_file:
+		s3 = boto3.client('s3')
+		key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+		try:
+			bucket = os.environ['S3_BUCKET']
+			s3.upload_fileobj(photo_file, bucket, key)
+			url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+			Photo.objects.create(url=url, villager=Villager.objects.get(id=pk))
+		except Exception as e:
+			print('An error occurred uploading file to S3')
+			print(e)
+	return redirect('villager_details', pk=pk)

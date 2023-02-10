@@ -37,11 +37,28 @@
         <a href="{% url 'villager_delete' villager.id%}">Delete</a>
       </div>
     </div>
+    <div class="upload-img">
+      <form action="{% url 'add_photo' villager.id %}" enctype="multipart/form-data" method="POST" class="upload-form">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br>
+        <button type="submit" class="btn">Upload Photo</button>
+      </form>
+    </div>
   </div>
   
   <div class="bulletin">
-      
+    <div class="photo-ctr">
+      {% for photo in villager.photo_set.all %}
+        <div class="polaroid">
+          <img class="photo" src="{{ photo.url }}">
+        </div>
+      {% empty %}
+      <div class="empty-msg">No Photos Uploaded</div>
+      {% endfor %}    
+    </div>
   </div>
+
   <div class="residence-history-ctr">
     <div class="residence-history">
       <div class="residence-heading">
@@ -81,7 +98,7 @@
       </div>
       <form action="{% url 'add_note' villager.id %}" method="POST" class="notebook-form">
         {% csrf_token %}
-        <textarea class="note-input" spellcheck="true" maxlength=250 wrap="soft" autocomplete="off" placeholder="Have something to say about this villager?"></textarea>
+        {{ note_form.as_p }}
         <input type="submit" value="Add Note" class="guest-btn">
       </form>
     </div>

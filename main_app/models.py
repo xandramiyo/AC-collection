@@ -32,3 +32,10 @@ class Note(models.Model):
 
 	def __str__(self):
 		return self.content
+
+class Photo(models.Model):
+	url = models.CharField(max_length=200)
+	villager = models.ForeignKey(Villager, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return f"Photo for villager_id: {self.villager_id} @{self.url}"
