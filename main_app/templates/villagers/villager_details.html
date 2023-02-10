@@ -5,7 +5,7 @@
 <div class="detail-ctr">
   <div class="sidebar">
     <div class="villager-pic">
-      <img src="https://dodo.ac/np/images/e/ec/Snake_NH.png">
+      <img src="{{ villager.villager_img }}">
     </div>
     <div class="villager-info">
       <table>
@@ -93,7 +93,12 @@
       <h3>Guestbook</h3>
       <div class="note-ctr">
         {% for note in villager.note_set.all %}
-        <p class="note">{{ note.content }}</p>
+        <div class="note-div">
+          <div class="delete-note">
+            <a href="{% url 'delete_note' note.id %}">X</a>
+          </div>
+          <p class="note">{{ note.content }}</p>
+        </div>
         {% endfor %}
       </div>
       <form action="{% url 'add_note' villager.id %}" method="POST" class="notebook-form">

@@ -8,5 +8,8 @@ Python
 
 Django
 
+## Acknowledgements
+
+ACNH API: 
 
 

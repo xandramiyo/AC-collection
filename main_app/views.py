@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
 import os
 import uuid
 import boto3
@@ -43,13 +45,29 @@ class VillagerDetail(DetailView):
 
 class VillagerCreate(CreateView):
 	model = Villager
-	fields = ['name', 'personality', 'species', 'birthday', 'catchphrase']
-	succes_url = '/villagers'
+	fields = ['name']
+	# succes_url = '/villagers'
 
-	# def form_valid(self, form):
+	def form_valid(self, form):
 		#1: find name of the villager in the form
+		name = form.cleaned_data['name']
 		#2: iterate over data and check if a villager object's name matches the form's name
-		#3: if there is a match, a photo object will be created
+		for villager_name in data:
+			if name.lower() == data[villager_name]['name']['name-USen'].lower():
+			#3: if there is a match, a photo object will be created
+				villager_photo = data[villager_name]['image_uri']
+				Villager.villager_img = villager_photo
+				villager_personality = data[villager_name]['personality']
+				Villager.personality = villager_personality
+				villager_species = data[villager_name]['species']
+				Villager.species = villager_species
+				villager_birthday = data[villager_name]['birthday-string']
+				Villager.birthday = villager_birthday
+				villager_catchphrase = data[villager_name]['catch-phrase']
+				new_villager = Villager.objects.create(name=name, personality=villager_personality, species=villager_species, birthday=villager_birthday, catchphrase=villager_catchphrase, villager_img=villager_photo)
+				new_villager.save()
+		return redirect('villagers_index')
+				
 
 class VillagerUpdate(UpdateView):
 	model = Villager
@@ -69,6 +87,9 @@ def add_note(request, villager_id):
 		new_note.save()
 	return redirect('villager_details', villager_id)
 
+class NoteDelete(DeleteView):
+	model = Note
+	sucess_url = '/villagers/villager_id'
 
 class HomeList(ListView):
 	model = Home

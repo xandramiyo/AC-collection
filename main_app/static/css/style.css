@@ -133,8 +133,8 @@ footer {
 .card {
 	display: flex;
 	flex-direction: column;
-	height: 35vmin;
-	width: 25vmin;
+	max-height: 14rem;
+	max-width: 12rem;
 	background-color: white;
 	margin: 2vmin;
 }
@@ -146,7 +146,19 @@ footer {
 .villager-name {
 	height: 10%;
 	text-align: center;
-	padding: .5rem;
+	padding: 0rem .3rem .6rem .3rem;
+}
+
+.villager-name p {
+	font-family: 'Indie Flower', cursive;
+	font-size: 1.5rem;
+	height: 1.5rem;
+}
+
+.villager-img img {
+	max-width: 10rem;
+	margin: .2rem;
+	margin-top: .8rem;
 }
 
 /* Villager Details Page */
@@ -174,6 +186,7 @@ footer {
 
 .villager-pic {
 	margin: auto;
+	margin-bottom: 0px;
 }
 
 .villager-pic > img {
@@ -215,6 +228,7 @@ td {
 	display: flex;
 	flex-direction: column;
 	margin-top: .4rem;
+	margin-bottom: .4rem;
 }
 
 .upload-form input {
@@ -321,6 +335,10 @@ h4 {
 	font-weight: 300;
 }
 
+.home-selector-form {
+	width: 18rem;
+}
+
 .home-selector select {
 	width: 70%;
 }
@@ -352,14 +370,26 @@ h4 {
 	overflow: auto;
 }
 
-.note {
-	font-family: 'Indie Flower', cursive;
-	font-size: 1.2rem;
-	margin: 0px .2rem;
+.note-div {
+	display: flex;
 	border-top: 1px solid var(--accent-color);
 	border-bottom: 1px solid var(--accent-color);
 }
 
+.delete-note a {
+	color: black;
+}
+
+.delete-note a:hover {
+	font-weight: 500;
+	color: red;
+}
+
+.note {
+	font-family: 'Indie Flower', cursive;
+	font-size: 1.2rem;
+	margin: 0px .2rem;
+}
 
 .notebook-form {
 	grid-area: form;
@@ -367,6 +397,7 @@ h4 {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: .5rem;
 }
 
 .notebook-form label {
