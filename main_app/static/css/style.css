@@ -83,6 +83,50 @@ footer {
 	font-size: .8rem;
 }
 
+/* Login/Signup  */
+
+.login-form label,
+.signup-form label {
+	color: black;
+}
+
+.login-form,
+.signup-form {
+	background-color: var(--accent-color);
+	padding: 1rem;
+	margin: 1rem;
+	box-shadow: 4px 4px 4px rgb(85, 85, 85);
+}
+
+.login-form p,
+.signup-form p {
+	display: flex;
+	flex-direction: column;
+}
+
+.login-form input,
+.signup-form input {
+	border: none;
+	background-color: var(--accent-color);
+	border-bottom: 2px solid white;
+	height: 1.2rem;
+	margin-bottom: .3rem;
+}
+
+.login-form input:focus,
+.signup-form input:focus {
+	outline: none !important;
+}
+
+.form-submit.btn {
+	border: .2rem solid white ;
+	background-color: var(--light-blue);
+	padding: .2rem;
+	height: 2rem;
+	width: 5rem;
+	cursor: pointer;
+}
+
 /* Villager Form */
 
 .villager-form, 
@@ -246,14 +290,11 @@ td {
 	min-height: 14rem;
 }
 
-.empty-msg {
-	text-align: center;
-}
-
 .photo-ctr {
 	margin: .5rem;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .polaroid {

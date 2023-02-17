@@ -8,6 +8,8 @@ import requests
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Villager, Home, Note, Photo
 from .forms import NoteForm, HomeForm
@@ -49,6 +51,7 @@ class VillagerCreate(CreateView):
 	# succes_url = '/villagers'
 
 	def form_valid(self, form):
+		form.instance.user = self.request.user
 		#1: find name of the villager in the form
 		name = form.cleaned_data['name']
 		#2: iterate over data and check if a villager object's name matches the form's name
@@ -66,7 +69,7 @@ class VillagerCreate(CreateView):
 				villager_catchphrase = data[villager_name]['catch-phrase']
 				new_villager = Villager.objects.create(name=name, personality=villager_personality, species=villager_species, birthday=villager_birthday, catchphrase=villager_catchphrase, villager_img=villager_photo)
 				new_villager.save()
-		return redirect('villagers_index')
+		return super().form_valid(form)
 				
 
 class VillagerUpdate(UpdateView):
@@ -89,7 +92,7 @@ def add_note(request, villager_id):
 
 class NoteDelete(DeleteView):
 	model = Note
-	sucess_url = '/villagers/villager_id'
+	sucess_url = '/villagers'
 
 class HomeList(ListView):
 	model = Home
@@ -133,3 +136,17 @@ def add_photo(request, pk):
 			print('An error occurred uploading file to S3')
 			print(e)
 	return redirect('villager_details', pk=pk)
+
+def signup(request):
+	error_message = ''
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			return redirect('villager_index')
+		else: 
+			error_message = 'Invalid sign up -- try again'
+		form = UserCreationForm()
+		context = {'form':form, 'error_message': error_message}
+		return render(request, 'registration/signup.html', context)

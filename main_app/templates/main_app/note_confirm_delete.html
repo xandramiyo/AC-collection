@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="delete-ctr">
+  <span class="delete-span">
+    <h1 class="confirm-delete">Are you sure you want to delete <span class="teal-text">{{ object.name }}</span>?</h1>
+  
+    <div class="confirm-delete-form">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Yes - Delete!" class="confirm-delete-btn">
+        <a href="{% url 'home'  %}">Cancel</a>
+      </form>
+    </div>
+  </span>
+</div>
+
+{% endblock %}
