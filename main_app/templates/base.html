@@ -14,24 +14,21 @@
 </head>
 <body>
 	<header>
+		<div class="logo">
+			<a href="{% url 'home' %}"><div>
+				<img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Animal_Crossing_Leaf.png">
+			</div></a>
+		</div>
 		<nav>
-			<div class="logo">
-				<a href="{% url 'home' %}"><div>
-					<img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Animal_Crossing_Leaf.png">
-				</div></a>
-				<p>{{ user.username }}</p>
-			</div>
-			<div class="main-nav">
+			{% if user.is_authenticated %}
 				<a href="{% url 'villagers_index' %}">All Villagers</a>
-			</div>
-			<div class="add-nav">
-				<div class="add-villager">
-					<a href="{% url 'villager_create' %}">Add Villager</a>
-				</div>
-				<div class="add-home">
-					<a href="{% url 'homes_index' %}">Address Book</a>
-				</div>
-			</div>
+				<a href="{% url 'villager_create' %}">Add Villager</a>
+				<a href="{% url 'homes_index' %}">Address Book</a>
+				<a href="{% url 'logout' %}">Log Out</a>
+			{% else %}
+				<a href="{% url 'signup' %}">Sign Up</a>
+				<a href="{% url 'login' %}">Log In</a>
+			{% endif %}
 		</nav>
 	</header>
 	<main class="container">

@@ -23,28 +23,18 @@ body {
 	margin: 0px;
 }
 
-nav {
+header {
 	background-color: var(--main-color);
 	display: flex;
-	justify-content: space-between;
 }
 
-nav > div {
+nav {
 	display: flex;
 	width: 100%;
 	display: flex;
 	align-items: flex-end;
-	justify-content: center;
+	justify-content: flex-end;
 	padding: 0px 0px 8px 0px;
-}
-
-.add-nav {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.add-villager {
-	justify-content: flex-end;
 }
 
 .logo {

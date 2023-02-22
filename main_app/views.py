@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 import os
 import uuid
@@ -10,7 +10,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Villager, Home, Note, Photo
 from .forms import NoteForm, HomeForm
 
@@ -25,11 +26,16 @@ def home(request):
 def about(request):
 	return render(request, 'about.html')
 
-class VillagerList(ListView):
+class VillagerList(LoginRequiredMixin, ListView):
 	model = Villager
 	template_name = 'villagers/villager_list.html'
 
-class VillagerDetail(DetailView):
+	def get_queryset(self):
+		queryset = super(VillagerList, self).get_queryset()
+		queryset = queryset.filter(user=self.request.user)
+		return queryset
+
+class VillagerDetail(LoginRequiredMixin, DetailView):
 	model = Villager
 	template_name = 'villagers/villager_details.html'
 	def get_context_data(self, **kwargs):
@@ -45,10 +51,10 @@ class VillagerDetail(DetailView):
 		Villager.objects.get(id=villager_id).homes.add(home_id)
 		return redirect('villager_details', pk=villager_id)
 
-class VillagerCreate(CreateView):
+class VillagerCreate(LoginRequiredMixin, CreateView):
 	model = Villager
 	fields = ['name']
-	# succes_url = '/villagers'
+	succes_url = '/villagers'
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
@@ -72,15 +78,16 @@ class VillagerCreate(CreateView):
 		return super().form_valid(form)
 				
 
-class VillagerUpdate(UpdateView):
+class VillagerUpdate(LoginRequiredMixin, UpdateView):
 	model = Villager
 	fields = ['name', 'personality', 'species', 'birthday', 'catchphrase']
 	succes_url = '/villagers/villager_id'
 
-class VillagerDelete(DeleteView):
+class VillagerDelete(LoginRequiredMixin, DeleteView):
 	model = Villager
 	success_url = '/villagers'
 
+@login_required
 def add_note(request, villager_id):
 	form = NoteForm(request.POST)
 	print(request.POST)
@@ -90,11 +97,11 @@ def add_note(request, villager_id):
 		new_note.save()
 	return redirect('villager_details', villager_id)
 
-class NoteDelete(DeleteView):
+class NoteDelete(LoginRequiredMixin, DeleteView):
 	model = Note
 	sucess_url = '/villagers'
 
-class HomeList(ListView):
+class HomeList(LoginRequiredMixin, ListView):
 	model = Home
 	def get_context_data(self, **kwargs):
 		home_form = HomeForm()
@@ -102,26 +109,29 @@ class HomeList(ListView):
 		context['home_form'] = home_form
 		return context
 
-class HomeCreate(CreateView):
+class HomeCreate(LoginRequiredMixin, CreateView):
 	model = Home
 	fields = '__all__'
 
-class HomeUpdate(UpdateView):
+class HomeUpdate(LoginRequiredMixin, UpdateView):
 	model = Home
 	fields = '__all__'
 
-class HomeDelete(DeleteView):
+class HomeDelete(LoginRequiredMixin, DeleteView):
 	model = Home
 	success_url = '/homes'
 
+@login_required
 def assoc_home(request, villager_id, home_id):
 	Villager.objects.get(id=villager_id).homes.add(home_id)
 	return redirect('villager_details', villager_id=villager_id)
 
+@login_required
 def diss_home(request, villager_id, home_id):
 	Villager.objects.get(id=villager_id).homes.remove(home_id)
 	return redirect('villager_details', villager_id)
 
+@login_required
 def add_photo(request, pk):
 	photo_file = request.FILES.get('photo-file', None)
 	if photo_file:
@@ -144,9 +154,9 @@ def signup(request):
 		if form.is_valid():
 			user = form.save()
 			login(request, user)
-			return redirect('villager_index')
-		else: 
-			error_message = 'Invalid sign up -- try again'
+			return redirect('artist_index')
+		else:
+			error_message = 'Invalid sign up - try again'
 		form = UserCreationForm()
-		context = {'form':form, 'error_message': error_message}
+		context = {'form': form, 'error_message': error_message}
 		return render(request, 'registration/signup.html', context)
