@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 import os
 import uuid
@@ -33,6 +34,7 @@ class VillagerList(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		queryset = super(VillagerList, self).get_queryset()
 		queryset = queryset.filter(user=self.request.user)
+		print(queryset)
 		return queryset
 
 class VillagerDetail(LoginRequiredMixin, DetailView):
@@ -54,7 +56,7 @@ class VillagerDetail(LoginRequiredMixin, DetailView):
 class VillagerCreate(LoginRequiredMixin, CreateView):
 	model = Villager
 	fields = ['name']
-	succes_url = '/villagers'
+	success_url = '/villagers'
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
@@ -63,6 +65,7 @@ class VillagerCreate(LoginRequiredMixin, CreateView):
 		#2: iterate over data and check if a villager object's name matches the form's name
 		for villager_name in data:
 			if name.lower() == data[villager_name]['name']['name-USen'].lower():
+				print('test 123')
 			#3: if there is a match, a photo object will be created
 				villager_photo = data[villager_name]['image_uri']
 				Villager.villager_img = villager_photo
@@ -73,8 +76,16 @@ class VillagerCreate(LoginRequiredMixin, CreateView):
 				villager_birthday = data[villager_name]['birthday-string']
 				Villager.birthday = villager_birthday
 				villager_catchphrase = data[villager_name]['catch-phrase']
-				new_villager = Villager.objects.create(name=name, personality=villager_personality, species=villager_species, birthday=villager_birthday, catchphrase=villager_catchphrase, villager_img=villager_photo)
-				new_villager.save()
+		new_villager = Villager.objects.create(
+		name=name, 
+		personality=villager_personality, 
+		species=villager_species, 
+		birthday=villager_birthday, 
+		catchphrase=villager_catchphrase, 
+		villager_img=villager_photo,
+		user=form.instance.user
+		)		
+		new_villager.save()
 		return super().form_valid(form)
 				
 
@@ -99,7 +110,12 @@ def add_note(request, villager_id):
 
 class NoteDelete(LoginRequiredMixin, DeleteView):
 	model = Note
-	sucess_url = '/villagers'
+	success_url = reverse_lazy('villagers_list')
+    
+	def get_success_url(self):
+		note = self.object  # Get the deleted Note instance
+		villager_pk = note.villager.pk  # Get the pk of the associated Villager instance
+		return reverse_lazy('villager_details', kwargs={'pk': villager_pk})
 
 class HomeList(LoginRequiredMixin, ListView):
 	model = Home
@@ -154,9 +170,9 @@ def signup(request):
 		if form.is_valid():
 			user = form.save()
 			login(request, user)
-			return redirect('artist_index')
+			return redirect('villagers_index')
 		else:
 			error_message = 'Invalid sign up - try again'
-		form = UserCreationForm()
-		context = {'form': form, 'error_message': error_message}
-		return render(request, 'registration/signup.html', context)
+	form = UserCreationForm()
+	context = {'form': form, 'error_message': error_message}
+	return render(request, 'registration/signup.html', context)

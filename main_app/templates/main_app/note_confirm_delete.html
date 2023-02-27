@@ -10,7 +10,7 @@
       <form action="" method="POST">
         {% csrf_token %}
         <input type="submit" value="Yes - Delete!" class="confirm-delete-btn">
-        <a href="{% url 'home'  %}">Cancel</a>
+        <a href="{% url 'villager_details' note.villager.pk %}">Cancel</a>
       </form>
     </div>
   </span>
